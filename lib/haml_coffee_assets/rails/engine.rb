@@ -14,7 +14,7 @@ module HamlCoffeeAssets
 
       # Initialize Haml Coffee Assets after Sprockets
       #
-      initializer 'sprockets.hamlcoffeeassets', group: :all, after: 'sprockets.environment' do |app|
+      config.assets.configure do |env|
         require 'haml_coffee_assets/action_view/template_handler'
 
         # No server side template support with AMD
@@ -77,10 +77,7 @@ module HamlCoffeeAssets
           end
         end
 
-        next unless app.assets
-
-        # Register Tilt template (for Sprockets)
-        app.assets.register_engine '.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler
+        env.register_engine '.hamlc', ::HamlCoffeeAssets::Tilt::TemplateHandler
       end
 
     end
